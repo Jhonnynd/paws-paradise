@@ -1,27 +1,52 @@
-import "./App.css";
-import { Box, Button, Container, Typography } from "@mui/material";
+import React from "react";
+import { Box, Container } from "@mui/material";
+import AddPet from "./Components/AddPet";
+import PetsList from "./Components/PetsList";
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      petsUpdated: false,
+    };
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <Container>
-        <Box sx={{ mt: "50px" }}>
-          <Button>Hi</Button>
-        </Box>
+  onPetsUpdate = () => {
+    this.state.petsUpdated
+      ? this.setState({
+          petsUpdated: false,
+        })
+      : this.setState({
+          petsUpdated: true,
+        });
+  };
 
-        <Box
+  render() {
+    return (
+      <Box
+        sx={{
+          bgcolor: "#b799ff",
+          height: "100vh",
+          textAlign: "center",
+        }}
+      >
+        <Container
           sx={{
-            mt: "50px",
-            width: "100%",
-            height: "70%",
-            bgcolor: "red",
+            maxWidth: {
+              lg: "1600px",
+            },
+            bgcolor: "#B799FF",
           }}
         >
-          Hello
-        </Box>
-      </Container>
-    </div>
-  );
+          <Box sx={{ bgcolor: "#B799FF", height: "40px" }}></Box>
+          <AddPet onPetsUpdate={this.onPetsUpdate} />
+          <PetsList
+            petsUpdated={this.state.petsUpdated}
+            onPetsUpdate={this.onPetsUpdate}
+          />
+        </Container>
+      </Box>
+    );
+  }
 }
 
 export default App;
