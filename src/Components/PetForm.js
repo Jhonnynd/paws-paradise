@@ -7,12 +7,11 @@ import {
   MenuItem,
   Modal,
   Select,
-  Typography,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { addPet, generateId } from "../Utilities/utils";
+import { addPet, generateId, editPet } from "../Utilities/utils";
 
-class AddPet extends React.Component {
+class PetForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +24,26 @@ class AddPet extends React.Component {
       open: false,
     };
   }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.selectedPet !== prevProps.selectedPet &&
+      this.props.selectedPet !== null &&
+      !this.state.open
+    ) {
+      this.setState({
+        id: this.props.selectedPet.id,
+        type: this.props.selectedPet.type,
+        age: this.props.selectedPet.age,
+        name: this.props.selectedPet.name,
+        comments: this.props.selectedPet.comments,
+        breed: this.props.selectedPet.breed,
+        open: true,
+      });
+      this.props.onEditPet();
+    }
+  }
+
   handleChange(e, field) {
     this.setState({ [field]: e.target.value });
   }
@@ -32,32 +51,73 @@ class AddPet extends React.Component {
     this.setState({ open: true });
   };
   handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleSubmit = (e) => {
-    this.props.onPetsUpdate();
-    e.preventDefault();
-    const generatedId = generateId();
-    this.handleClose();
-
-    addPet({
-      id: generatedId,
-      type: this.state.type,
-      age: this.state.age,
-      name: this.state.name,
-      breed: this.state.breed,
-      comments: this.state.comments,
-    });
-
     this.setState({
       id: null,
       type: "",
       age: 0,
       name: "",
-      breed: "",
       comments: "",
+      breed: "",
+      open: false,
     });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onPetsUpdate();
+
+    if (this.handleInputs()) {
+      addPet({
+        id: generateId(),
+        type: this.state.type,
+        age: this.state.age,
+        name: this.state.name,
+        breed: this.state.breed,
+        comments: this.state.comments,
+      });
+      this.setState({
+        id: null,
+        type: "",
+        age: 0,
+        name: "",
+        breed: "",
+        comments: "",
+        open: false,
+      });
+    } else {
+      alert("Please fill in all the information!");
+    }
+  };
+
+  handleInputs = () => {
+    if (
+      this.state.type.length > 0 ||
+      this.state.name.length > 0 ||
+      this.state.breed.length > 0 ||
+      this.state.comments.length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  handleEditPet = (e) => {
+    e.preventDefault();
+    if (this.handleInputs()) {
+      editPet(this.state);
+      this.setState({
+        id: null,
+        type: "",
+        age: 0,
+        name: "",
+        breed: "",
+        comments: "",
+        open: false,
+      });
+
+      this.props.onPetsUpdate();
+    }
   };
 
   render() {
@@ -72,7 +132,6 @@ class AddPet extends React.Component {
         }}
       >
         {/* Modal */}
-
         <Button
           variant="contained"
           sx={{
@@ -95,7 +154,7 @@ class AddPet extends React.Component {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "800px",
-              bgcolor: "#7DA5F3",
+              bgcolor: "#b799ff",
               border: "2px solid #000",
               boxShadow: 24,
               p: 8,
@@ -115,9 +174,12 @@ class AddPet extends React.Component {
                 label="Name"
                 value={this.state.name}
                 onChange={(e) => this.handleChange(e, "name")}
+                InputProps={{
+                  style: { backgroundColor: "white" },
+                }}
               />
               <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
+                <FormControl fullWidth sx={{ bgcolor: "white" }}>
                   <InputLabel required id="demo-simple-select-label">
                     Type
                   </InputLabel>
@@ -127,6 +189,9 @@ class AddPet extends React.Component {
                     value={this.state.type}
                     label="Type"
                     onChange={(e) => this.handleChange(e, "type")}
+                    InputProps={{
+                      style: { backgroundColor: "white" },
+                    }}
                   >
                     <MenuItem value="dog">Dog</MenuItem>
                     <MenuItem value="cat">Cat</MenuItem>
@@ -140,6 +205,9 @@ class AddPet extends React.Component {
                 label="Breed"
                 value={this.state.breed}
                 onChange={(e) => this.handleChange(e, "breed")}
+                InputProps={{
+                  style: { backgroundColor: "white" },
+                }}
               />
               <TextField
                 required
@@ -149,6 +217,9 @@ class AddPet extends React.Component {
                 value={this.state.age}
                 min="0"
                 onChange={(e) => this.handleChange(e, "age")}
+                InputProps={{
+                  style: { backgroundColor: "white" },
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -172,11 +243,20 @@ class AddPet extends React.Component {
                 multiline
                 rows={4}
                 onChange={(e) => this.handleChange(e, "comments")}
+                InputProps={{
+                  style: { backgroundColor: "white" },
+                }}
               />
               <Button
                 variant="contained"
                 color="primary"
-                onClick={(e) => this.handleSubmit(e)}
+                onClick={(e) => {
+                  if (this.state.id !== null) {
+                    this.handleEditPet(e);
+                  } else {
+                    this.handleSubmit(e);
+                  }
+                }}
               >
                 Submit
               </Button>
@@ -190,4 +270,4 @@ class AddPet extends React.Component {
   }
 }
 
-export default AddPet;
+export default PetForm;

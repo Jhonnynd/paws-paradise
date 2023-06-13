@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Container } from "@mui/material";
-import AddPet from "./Components/AddPet";
+import PetForm from "./Components/PetForm";
 import PetsList from "./Components/PetsList";
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       petsUpdated: false,
+      selectedPet: null,
     };
   }
 
@@ -18,6 +19,18 @@ class App extends React.Component {
       : this.setState({
           petsUpdated: true,
         });
+  };
+
+  onSelectPet = (pet) => {
+    this.setState({
+      selectedPet: pet,
+    });
+  };
+
+  onEditPet = () => {
+    this.setState({
+      selectedPet: null,
+    });
   };
 
   render() {
@@ -38,10 +51,15 @@ class App extends React.Component {
           }}
         >
           <Box sx={{ bgcolor: "#B799FF", height: "40px" }}></Box>
-          <AddPet onPetsUpdate={this.onPetsUpdate} />
+          <PetForm
+            onPetsUpdate={this.onPetsUpdate}
+            selectedPet={this.state.selectedPet}
+            onEditPet={this.onEditPet}
+          />
           <PetsList
             petsUpdated={this.state.petsUpdated}
             onPetsUpdate={this.onPetsUpdate}
+            onSelectPet={this.onSelectPet}
           />
         </Container>
       </Box>

@@ -19,7 +19,12 @@ class Pet extends React.Component {
 
   handleDeletePet = (id) => {
     deletePet(id);
-    this.props.onPetsUpdate()
+    this.props.onPetsUpdate();
+  };
+
+  onSelectPet = () => {
+    const { pet, handleSelectPet } = this.props;
+    handleSelectPet(pet);
   };
 
   render() {
@@ -94,7 +99,7 @@ class Pet extends React.Component {
             </Typography>
           </CardContent>
           <CardActions sx={{ justifyContent: "flex-end" }}>
-            <IconButton aria-label="Edit">
+            <IconButton aria-label="Edit" onClick={() => this.onSelectPet()}>
               <EditIcon />
             </IconButton>
             <IconButton

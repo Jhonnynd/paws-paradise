@@ -22,6 +22,10 @@ class PetsList extends React.Component {
       });
     }
   }
+  handleSelectPet = (pet) => {
+    const { onSelectPet } = this.props;
+    onSelectPet(pet);
+  };
 
   render() {
     const { pets } = this.state;
@@ -42,7 +46,12 @@ class PetsList extends React.Component {
           <Pet /> */}
           {flattedPets.map((pet) => {
             return (
-              <Pet key={pet.id} pet={pet} onPetsUpdate={this.props.onPetsUpdate} />
+              <Pet
+                key={pet.id}
+                pet={pet}
+                onPetsUpdate={this.props.onPetsUpdate}
+                handleSelectPet={this.handleSelectPet}
+              />
             );
           })}
         </Box>
