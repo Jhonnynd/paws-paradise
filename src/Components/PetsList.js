@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Pet from "./Pet";
 import { getListPets } from "../Utilities/utils";
 
@@ -31,31 +31,28 @@ class PetsList extends React.Component {
     const { pets } = this.state;
     const flattedPets = pets.flat();
     return (
-      <>
-        <Box
-          sx={{
-            p: 3,
-            mt: "50px",
-            height: "600px",
-            bgcolor: "#ACBCFF",
-            display: "flex",
-            gap: "50px",
-          }}
-        >
-          {/* <Pet />
-          <Pet /> */}
+      <Box
+        sx={{
+          p: 3,
+          mt: "50px",
+          height: "100%",
+          bgcolor: "#ACBCFF",
+        }}
+      >
+        <Grid container spacing={5} justifyContent="center">
           {flattedPets.map((pet) => {
             return (
-              <Pet
-                key={pet.id}
-                pet={pet}
-                onPetsUpdate={this.props.onPetsUpdate}
-                handleSelectPet={this.handleSelectPet}
-              />
+              <Grid item xs={12} sm={6} md={4} lg={3} key={pet.id}>
+                <Pet
+                  pet={pet}
+                  onPetsUpdate={this.props.onPetsUpdate}
+                  handleSelectPet={this.handleSelectPet}
+                />
+              </Grid>
             );
           })}
-        </Box>
-      </>
+        </Grid>
+      </Box>
     );
   }
 }

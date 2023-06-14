@@ -38,8 +38,10 @@ class App extends React.Component {
       <Box
         sx={{
           bgcolor: "#b799ff",
-          height: "100vh",
+          height: "100%",
+          minHeight: "100vh",
           textAlign: "center",
+          pb: 3,
         }}
       >
         <Container

@@ -13,10 +13,6 @@ import cat from "../images/cat.png";
 import { deletePet } from "../Utilities/utils";
 
 class Pet extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleDeletePet = (id) => {
     deletePet(id);
     this.props.onPetsUpdate();
@@ -32,85 +28,78 @@ class Pet extends React.Component {
     const { age, breed, id, comments, name, type } = pet;
 
     return (
-      <>
-        <Card
-          sx={{
-            width: "345px",
-            height: "500px",
-            display: "flex",
-            bgcolor: "#7DA5F3",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
+      <Card
+        sx={{
+          height: "500px",
+          display: "flex",
+          bgcolor: "#7DA5F3",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{ pt: "10px" }}
         >
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={{ pt: "10px" }}
-          >
-            {/* Boggie */}
-            {name}
-          </Typography>
-          <CardMedia
-            component="img"
-            height="194"
-            image={type === "dog" ? dog : cat}
-            alt="Paella dish"
-          />
-          <CardContent>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography gutterBottom variant="h6" component="div">
-                  Age:
-                </Typography>
-                <Typography gutterBottom variant="h6" component="div">
-                  {age} years
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                  gap: "0px",
-                }}
-              >
-                <Typography gutterBottom variant="h6" component="div">
-                  Breed:
-                </Typography>
-                <Typography gutterBottom variant="h6" component="div">
-                  {breed}
-                </Typography>
-              </Box>
+          {/* Boggie */}
+          {name}
+        </Typography>
+        <CardMedia
+          component="img"
+          height="194"
+          image={type === "dog" ? dog : cat}
+          alt="Paella dish"
+        />
+        <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "column",
+              }}
+            >
+              <Typography gutterBottom variant="h6" component="div">
+                Age:
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                {age} years
+              </Typography>
             </Box>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ pt: "5px" }}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "column",
+                gap: "0px",
+              }}
             >
-              {comments}
-            </Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "flex-end" }}>
-            <IconButton aria-label="Edit" onClick={() => this.onSelectPet()}>
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="Delete"
-              onClick={(id) => this.handleDeletePet(id)}
-            >
-              <DeleteIcon sx={{ color: "#bd271c" }} />
-            </IconButton>
-          </CardActions>
-        </Card>
-      </>
+              <Typography gutterBottom variant="h6" component="div">
+                Breed:
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                {breed}
+              </Typography>
+            </Box>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ pt: "5px" }}>
+            {comments}
+          </Typography>
+        </CardContent>
+        <CardActions sx={{ justifyContent: "flex-end" }}>
+          <IconButton aria-label="Edit" onClick={() => this.onSelectPet()}>
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => this.handleDeletePet(id)}
+          >
+            <DeleteIcon sx={{ color: "#bd271c" }} />
+          </IconButton>
+        </CardActions>
+      </Card>
     );
   }
 }

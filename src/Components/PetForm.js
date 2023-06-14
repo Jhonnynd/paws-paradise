@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Modal,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { addPet, generateId, editPet } from "../Utilities/utils";
+import { Pets } from "@mui/icons-material";
 
 class PetForm extends React.Component {
   constructor(props) {
@@ -135,10 +137,16 @@ class PetForm extends React.Component {
         <Button
           variant="contained"
           sx={{
-            p: "30px 190px",
+            p: {
+              xs: "30px 100px",
+              md: "30px 190px",
+            },
           }}
           onClick={() => this.handleOpen()}
         >
+          <IconButton aria-label="Paw icon" sx={{ pr: 2 }}>
+            <Pets />
+          </IconButton>
           Add pet
         </Button>
         <Modal
@@ -153,7 +161,10 @@ class PetForm extends React.Component {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "800px",
+              width: {
+                sm: "80%",
+                md: "800px",
+              },
               bgcolor: "#b799ff",
               border: "2px solid #000",
               boxShadow: 24,

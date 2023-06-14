@@ -1,21 +1,21 @@
-// const initialPets = [
-//   {
-//     id: 1,
-//     age: 7,
-//     breed: "Chihuahua",
-//     name: "Ruby",
-//     comments: `Everyone's bestfriend! `,
-//     type: "dog",
-//   },
-//   {
-//     id: 2,
-//     age: 3,
-//     breed: "Wild",
-//     name: "Iron",
-//     comments: `Likes to eat. A lot.`,
-//     type: "cat",
-//   },
-// ];
+const initialPets = [
+  {
+    id: 1,
+    age: 7,
+    breed: "Chihuahua",
+    name: "Ruby",
+    comments: `Everyone's bestfriend! `,
+    type: "dog",
+  },
+  {
+    id: 2,
+    age: 3,
+    breed: "Wild",
+    name: "Iron",
+    comments: `Likes to eat. A lot.`,
+    type: "cat",
+  },
+];
 
 export const generateId = () => {
   const minLength = 5;
@@ -36,8 +36,8 @@ export const generateId = () => {
 export const getListPets = () => {
   let pets = localStorage.getItem("pets");
   if (!pets) {
-    localStorage.setItem("pets");
-    pets = pets;
+    pets = initialPets;
+    localStorage.setItem("pets", JSON.stringify(pets));
   } else {
     pets = JSON.parse(pets);
   }
