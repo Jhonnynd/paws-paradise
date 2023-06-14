@@ -162,7 +162,7 @@ class PetForm extends React.Component {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: {
-                sm: "80%",
+                xs: "80%",
                 md: "800px",
               },
               bgcolor: "#b799ff",
@@ -177,6 +177,10 @@ class PetForm extends React.Component {
               sx={{
                 display: "flex",
                 gap: "30px",
+                flexDirection: {
+                  xs: "column",
+                  md: "row",
+                },
               }}
             >
               <TextField

@@ -53,7 +53,7 @@ export const addPet = (pet) => {
 
 export const deletePet = (id) => {
   const pets = JSON.parse(localStorage.getItem("pets"));
-  const indextoDelete = pets.findIndex((pet) => pet === id);
+  const indextoDelete = pets.findIndex((pet) => pet.id === id);
   pets.splice(indextoDelete, 1);
   localStorage.setItem("pets", JSON.stringify(pets));
 };
